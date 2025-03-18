@@ -2,10 +2,11 @@ from telethon import TelegramClient
 import pyperclip
 import asyncio
 import logging
+import os
 
 # Вставьте свои данные
-API_ID = '24275090'
-API_HASH = '8a5114253d99c03553ca1755fc9441f0'
+API_ID = int(os.getenv('API_ID'))
+API_HASH = os.getenv('API_HASH')
 PHOTO_PATH = 'photo.jpg'  # Укажите путь к фото
 
 logging.basicConfig(level=logging.INFO)
