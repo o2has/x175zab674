@@ -37,7 +37,7 @@ async def main():
         selected_folder_id = folder_list[folder_number - 1]
         chats_in_folder = folders[selected_folder_id]
 
-        interval = 300
+        interval = int(os.getenv('API_ID'))
 
         while True:
             message = """⭑･ﾟﾟ･::･｡⋆💫⋆｡･::･ﾟﾟ･⭑
