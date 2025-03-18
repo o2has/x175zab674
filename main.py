@@ -13,6 +13,8 @@ logging.basicConfig(level=logging.INFO)
 
 async def main():
     async with TelegramClient('session_name', API_ID, API_HASH) as client:
+        print("started")
+        sys.stdout.flush()
         dialogs = await client.get_dialogs()
 
         folders = {}
@@ -25,6 +27,8 @@ async def main():
         folder_list = list(folders.keys())
         for idx, folder_id in enumerate(folder_list, start=1):
             print(f"{idx}. Папка {folder_id} (Чатов: {len(folders[folder_id])})")
+            sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
 
         folder_number = 1
         selected_folder_id = folder_list[folder_number - 1]
@@ -48,20 +52,30 @@ async def main():
                     ⭑･ﾟﾟ･::･｡⋆💫⋆｡･::･ﾟﾟ･⭑"""
             if not message:
                 print("Буфер обмена пуст! Ожидаю новое сообщение...")
+                sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
                 await asyncio.sleep(interval)
                 continue
 
             print(f"Рассылка сообщения в {len(chats_in_folder)} чатов из папки {selected_folder_id}:\n{message}\n")
+            sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
 
             for chat in chats_in_folder:
                 try:
                     await client.send_file(chat.entity, PHOTO_PATH, caption=message)
                     print(f"Сообщение с фото отправлено в {chat.name}")
+                    sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
                 except Exception as e:
                     print(f"Ошибка отправки в {chat.name}: {e}")
+                    sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
                     logging.error(f"Ошибка отправки в {chat.name}: {e}")
 
             print("Ожидание перед следующей отправкой...")
+            sys.stdout.flush()  # Это заставит вывод сразу появиться в логах
+
             await asyncio.sleep(interval)
 
 if __name__ == "__main__":
