@@ -1,13 +1,14 @@
 from telethon import TelegramClient
 import pyperclip
 import asyncio
-import time
+import logging
 
 # Вставьте свои данные
 API_ID = '24275090'
 API_HASH = '8a5114253d99c03553ca1755fc9441f0'
 PHOTO_PATH = 'photo.jpg'  # Укажите путь к фото
 
+logging.basicConfig(level=logging.INFO)
 
 async def main():
     async with TelegramClient('session_name', API_ID, API_HASH) as client:
@@ -19,8 +20,6 @@ async def main():
                 if dialog.folder_id not in folders:
                     folders[dialog.folder_id] = []
                 folders[dialog.folder_id].append(dialog)
-
-
 
         folder_list = list(folders.keys())
         for idx, folder_id in enumerate(folder_list, start=1):
@@ -48,7 +47,7 @@ async def main():
                     ⭑･ﾟﾟ･::･｡⋆💫⋆｡･::･ﾟﾟ･⭑"""
             if not message:
                 print("Буфер обмена пуст! Ожидаю новое сообщение...")
-                time.sleep(interval)
+                await asyncio.sleep(interval)
                 continue
 
             print(f"Рассылка сообщения в {len(chats_in_folder)} чатов из папки {selected_folder_id}:\n{message}\n")
@@ -59,10 +58,10 @@ async def main():
                     print(f"Сообщение с фото отправлено в {chat.name}")
                 except Exception as e:
                     print(f"Ошибка отправки в {chat.name}: {e}")
+                    logging.error(f"Ошибка отправки в {chat.name}: {e}")
 
             print("Ожидание перед следующей отправкой...")
-            time.sleep(interval)
-
+            await asyncio.sleep(interval)
 
 if __name__ == "__main__":
     asyncio.run(main())
