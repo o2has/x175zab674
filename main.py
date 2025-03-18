@@ -11,6 +11,8 @@ PHOTO_PATH = 'photo.jpg'  # Укажите путь к фото
 
 logging.basicConfig(level=logging.INFO)
 
+print("here")
+
 async def main():
     async with TelegramClient('session_name', API_ID, API_HASH) as client:
         print("started")
