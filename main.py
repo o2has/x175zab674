@@ -3,6 +3,7 @@ import pyperclip
 import asyncio
 import logging
 import os
+import sys
 
 # Вставьте свои данные
 API_ID = int(os.getenv('API_ID'))
